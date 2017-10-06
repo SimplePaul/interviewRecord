@@ -1,0 +1,47 @@
+DFS算法
+思想：一直往深处走，直到找到解或者走不下去为止
+DFS(dep,...) // dep代表目前DFS的深度
+{
+	if (找到解或者走不下去了){
+	   return;
+	}
+	枚举下种情况，DFS(dep + 1, ...)
+}
+
+DFS: 使用栈保存未被检测的节点，结点按照深度优先的次序被访问并依次压入栈中，并以相反的次序出栈进行新的检测
+     类似于树的先根遍历，深搜的例子：走迷宫，没有办法用分身术来站在每一个走过的位置。
+例子：
+leetcode 394  
+
+class Solution {
+public:
+     string DFS(string s, int &k){  // 在所有的层中是维护一个共同的索引值k
+        string ans;  
+        int cnt = 0; 
+        while(k < s.size())  
+        {  
+            if(isdigit(s[k])){     // 判断是否是数字
+                cnt = cnt * 10 + s[k++]-'0';    //  cnt的变化值为什么这样乘以10
+            }  
+            else if(s[k]=='['){  // 如果是左括号，则要进入下层递归
+                string tem = DFS(s, ++k);      // 递归调用
+                for(int i = 0; i < cnt; i++){
+                     ans += tem; 
+                } 
+                cnt = 0;        // 
+            }  
+            else if(s[k]==']'){  
+                k++;  
+                return ans;  
+            }  
+            else ans += s[k++];  // 若是普通数字就直接加上
+        }  
+        return ans;  
+    }  
+      
+    string decodeString(string s){
+        string res;
+        int k = 0;
+        return DFS(s, k);
+    }
+};
