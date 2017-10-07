@@ -126,3 +126,25 @@ public:
 };
 
 思路二： 使用从 中心向外扩展的方法，注意回文的字符串个数为奇数或者偶数的时候
+
+class Solution {
+public:
+    int helper(string s, int start, int end){
+        int res = 0;
+        int len = s.size();
+        while (start >= 0 && end <= len && s[start] == s[end]){
+            res++;
+            start--;
+            end++;
+        }
+        return res;
+    }
+    int countSubstrings(string s) {
+        int len = s.size(), cnt = 0;
+        for (int i = 0; i < len; i++){
+            cnt += helper(s, i, i);   // 回文为奇数的时候
+            cnt += helper(s, i, i + 1); // 回文为偶数的时候
+        }
+        return cnt;
+    }
+};
