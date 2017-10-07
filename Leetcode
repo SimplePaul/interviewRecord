@@ -82,3 +82,47 @@ public:
         return accumulate(cnt.begin(), cnt.end(), 0);    // 将cnt的所有的值累加起来
     }
 };
+
+
+leetcode 647. Palindromic Substrings 回文字串
+
+题目：
+Given a string, your task is to count how many palindromic substrings in this string.
+
+The substrings with different start indexes or end indexes are counted as different substrings even they consist
+ of same characters.
+
+Example 1:
+Input: "abc"
+Output: 3
+Explanation: Three palindromic strings: "a", "b", "c".
+Example 2:
+Input: "aaa"
+Output: 6
+Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa".
+
+思路一：dp思想
+参考链接：http://blog.csdn.net/lishichengyan/article/details/77103324
+定义d[i][j]：若从i到j的字符串为回文，则为真（1），否则为假（0），那么d[i][j]为真的前提是：头尾两个字符串相同并且去掉头尾以后的字串也是
+回文（即d[i+1][j-1]为真），这里面要注意特殊情况，即：去掉头尾以后为空串，所以如果j-i<3，并且头尾相等，也是回文的。
+
+class Solution {
+public:
+    int countSubstrings(string s) {
+        int n = s.size(), count = 0;
+        vector<vector<int>> dp(n, vector<int> (n));   //二维vector初始化，打表
+        for ( int end = 0; end < n; ++end ) {
+            dp[end][end] = 1;                         // 每一个字符都是一个回文
+            ++count;                         
+            for ( int start = 0; start < end; ++start ) {
+                if ( s[start] == s[end] && (start+1 >= end-1 || dp[start+1][end-1])) {
+                    dp[start][end] = 1;
+                    ++count;         // 有一个为真那么结果值就加一
+                }
+            }
+        }
+        return count;
+    }
+};
+
+思路二： 使用从 中心向外扩展的方法，注意回文的字符串个数为奇数或者偶数的时候
