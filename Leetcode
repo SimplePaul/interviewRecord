@@ -21,7 +21,7 @@ public:
         while(k < s.size())  
         {  
             if(isdigit(s[k])){     // 判断是否是数字
-                cnt = cnt * 10 + s[k++]-'0';    //  cnt的变化值为什么这样乘以10
+                cnt = cnt * 10 + s[k++]-'0';    //  如果是遇到100这样的数字，那么则需要这样处理
             }  
             else if(s[k]=='['){  // 如果是左括号，则要进入下层递归
                 string tem = DFS(s, ++k);      // 递归调用
