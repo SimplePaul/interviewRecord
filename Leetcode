@@ -68,7 +68,7 @@ abcd这个字符串，以d结尾的子字符串有abcd, bcd, cd, d，那么我�
 class Solution {
 public:
     int findSubstringInWraproundString(string p) { // 很有技巧的一个题
-         vector<int> cnt(26, 0);    // 对应26个字母
+         vector<int> cnt(26, 0);    // 对应26个字母，注意vector的初始化
         int len = 0;
         for (int i = 0; i < p.size(); ++i) {
             if (i > 0 && (p[i] == p[i - 1] + 1 || p[i - 1] - p[i] == 25)) {
